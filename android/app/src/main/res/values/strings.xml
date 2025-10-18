@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">HackathonApp</string>
+    <string name="title_activity_main">HackathonApp</string>
+    <string name="package_name">com.hackathon2025.app</string>
+    <string name="custom_url_scheme">com.hackathon2025.app</string>
+</resources>

@@ -1,0 +1,10 @@
+{
+  "appId": "com.hackathon2025.app",
+  "appName": "HackathonApp",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "url": "https://front-hackathon2025.netlify.app",
+    "cleartext": true
+  }
+}
