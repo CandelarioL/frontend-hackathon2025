@@ -4,7 +4,7 @@
   "webDir": "dist",
   "bundledWebRuntime": false,
   "server": {
-    "url": "https://front-hackathon2025.netlify.app",
+    "url": "https://frontend-hackathon2025.netlify.app",
     "cleartext": true
   }
 }
