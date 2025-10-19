@@ -1,11 +1,12 @@
 <template>
   <div
-    class="min-h-screen bg-gradient-to-b from-sky-200 to-green-200 flex flex-col items-center justify-center relative overflow-hidden"
+    class="min-h-screen bg-gradient-to-b from-sky-200 to-green-200 flex flex-col items-center justify-center relative overflow-hidden px-4 py-8 sm:px-6"
     :style="{ fontSize: fontSize + 'px' }"
   >
     <!-- 🟢 Panel de puntuación -->
     <div
-      class="absolute top-[140px] right-8 text-right bg-white border border-gray-300 rounded-xl px-6 py-3 shadow-lg z-20"
+      class="hidden sm:block absolute top-4 sm:top-36 left-1/2 sm:left-auto -translate-x-1/2 sm:translate-x-0 right-4 sm:right-8 text-right bg-white bg-opacity-95 border border-gray-300 rounded-xl px-4 py-2 sm:px-6 sm:py-3 shadow-lg z-20 w-44 sm:w-auto"
+      style="backdrop-filter: blur(4px);"
     >
       <div class="text-sm text-green-700 font-bold">Palabras aprendidas</div>
       <div class="text-3xl font-bold">{{ contador }}</div>
@@ -14,21 +15,21 @@
     </div>
 
     <!-- 🐶 Mascota -->
-    <div class="absolute bottom-4 left-6 flex flex-col items-center text-center z-10">
+    <div class="hidden sm:flex absolute bottom-4 left-4 sm:left-6 flex-col items-center text-center z-10 max-w-[180px] sm:max-w-xs">
       <img
-        :class="['w-52 sm:w-64 drop-shadow-2xl transition-transform duration-700', saltando ? 'jump' : '']"
+        :class="['w-28 sm:w-52 drop-shadow-2xl transition-transform duration-700', saltando ? 'jump' : '']"
         src="https://cdn-icons-png.flaticon.com/512/616/616408.png"
         alt="Mascota motivadora"
       />
       <p
-        class="text-gray-800 text-xl font-semibold italic mt-2 bg-white bg-opacity-80 px-3 py-1 rounded-xl shadow-md max-w-xs"
+        class="text-gray-800 text-sm sm:text-lg font-semibold italic mt-2 bg-white bg-opacity-80 px-3 py-1 rounded-xl shadow-md break-words"
       >
         {{ mensajeMascota }}
       </p>
     </div>
 
     <!-- 🔹 Controles de accesibilidad -->
-    <div class="absolute top-4 right-4 flex space-x-3 z-20">
+    <div class="absolute top-4 right-4 flex space-x-2 sm:space-x-3 z-20 items-center">
       <button
         @click="cambiarIdioma"
         class="bg-indigo-600 text-white px-3 py-2 rounded-lg shadow hover:bg-indigo-700"
@@ -37,13 +38,13 @@
       </button>
       <button
         @click="aumentarTexto"
-        class="bg-green-500 text-white px-3 py-2 rounded-lg shadow hover:bg-green-600"
+        class="bg-green-500 text-white px-2 py-1 sm:px-3 sm:py-2 rounded-lg shadow hover:bg-green-600"
       >
         ➕ Aumentar
       </button>
       <button
         @click="disminuirTexto"
-        class="bg-red-500 text-white px-3 py-2 rounded-lg shadow hover:bg-red-600"
+        class="bg-red-500 text-white px-2 py-1 sm:px-3 sm:py-2 rounded-lg shadow hover:bg-red-600"
       >
         ➖ Reducir
       </button>
@@ -51,7 +52,8 @@
 
     <!-- 🔹 Contenedor principal -->
     <div
-      class="bg-white shadow-2xl rounded-2xl p-10 w-[95%] sm:w-[850px] text-center border border-gray-200 relative z-20"
+      class="bg-white shadow-2xl rounded-2xl p-6 sm:p-10 w-full max-w-[900px] text-center border border-gray-200 relative z-20"
+      style="min-width:260px;"
     >
       <h2 class="text-2xl font-semibold text-gray-800 mb-8">
         💬 {{ idioma === "es" ? "Vocabulario" : "Tukari" }}
@@ -59,12 +61,12 @@
 
       <!-- Palabra y definición -->
       <div
-        class="bg-yellow-50 border border-yellow-200 rounded-xl p-6 text-left text-gray-800 leading-relaxed shadow-inner mb-6"
+        class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 sm:p-6 text-left text-gray-800 leading-relaxed shadow-inner mb-6 max-h-[45vh] overflow-auto"
       >
-        <p class="text-2xl font-bold text-blue-700 mb-3">
+        <p class="text-2xl font-bold text-blue-700 mb-3 truncate">
           {{ idioma === "es" ? palabraActual.palabra : palabraActual.traduccion }}
         </p>
-        <p class="text-gray-700">
+        <p class="text-gray-700 whitespace-pre-line">
           {{ idioma === "es" ? palabraActual.definicion : palabraActual.definicion_wixarika }}
         </p>
       </div>
@@ -77,12 +79,13 @@
       </h3>
 
       <!-- Opciones -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
         <button
           v-for="(op, index) in palabraActual.opciones"
           :key="index"
           @click="verificar(op)"
-          class="bg-gray-100 border-2 border-gray-200 text-gray-700 font-medium rounded-xl py-3 px-4 hover:bg-green-100 hover:border-green-400 transition-all"
+          class="bg-gray-100 border-2 border-gray-200 text-gray-700 font-medium rounded-xl py-3 px-3 hover:bg-green-100 hover:border-green-400 transition-all text-left truncate"
+          :aria-label="(idioma === 'es' ? op : traducirOpcion(op))"
         >
           {{ idioma === "es" ? op : traducirOpcion(op) }}
         </button>
@@ -157,9 +160,9 @@ export default {
       saltando: false,
     };
   },
-  mounted() {
-    this.nuevaPalabra();
-  },
+    mounted() {
+      this.nuevaPalabra();
+    },
   methods: {
     cambiarIdioma() {
       this.idioma = this.idioma === "es" ? "wix" : "es";
@@ -218,7 +221,7 @@ export default {
       speech.lang = this.idioma === "es" ? "es-ES" : "es-MX";
       speech.rate = 0.9;
       speech.pitch = 1.1;
-      speech.volume = 1.3;
+      speech.volume = Math.min(1.0, 1.0);
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(speech);
     },

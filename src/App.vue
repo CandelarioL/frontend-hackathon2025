@@ -1,4 +1,3 @@
-<!-- Cambio menor para forzar rebuild -->
 <template>
   <div>
     <NavBarGlobal v-if="isAuthenticated" />

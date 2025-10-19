@@ -22,7 +22,7 @@
 
     <!-- 🟢 Panel de puntuación -->
     <div
-      class="absolute top-[140px] right-8 text-right bg-white bg-opacity-90 border border-gray-300 rounded-xl px-6 py-3 shadow-lg z-20"
+      class="hidden sm:block absolute top-[140px] right-8 text-right bg-white bg-opacity-90 border border-gray-300 rounded-xl px-6 py-3 shadow-lg z-20"
     >
       <div class="text-sm text-green-700 font-bold">
         {{ idioma === 'es' ? 'Historias jugadas' : 'Tukari neyutɨa' }}
@@ -35,7 +35,7 @@
     </div>
 
     <!-- 🐶 Mascota -->
-    <div class="absolute bottom-4 left-6 flex flex-col items-center text-center z-10">
+    <div class="hidden sm:flex absolute bottom-4 left-6 flex-col items-center text-center z-10">
       <img
         :class="['w-52 sm:w-64 drop-shadow-2xl transition-transform duration-700', saltando ? 'jump' : '']"
         src="https://cdn-icons-png.flaticon.com/512/616/616408.png"
@@ -49,22 +49,22 @@
     </div>
 
     <!-- 🌐 Controles -->
-    <div class="absolute top-4 right-4 flex space-x-3 z-30">
+    <div class="absolute top-4 sm:right-4 right-2 flex sm:space-x-3 space-x-2 z-30">
       <button
         @click="cambiarIdioma"
-        class="bg-indigo-600 text-white px-3 py-2 rounded-lg shadow hover:bg-indigo-700"
+        class="bg-indigo-600 text-white px-2 sm:px-3 py-2 text-sm sm:text-base rounded-lg shadow hover:bg-indigo-700"
       >
         🌐 {{ idioma === 'es' ? 'Wixárika' : 'Español' }}
       </button>
       <button
         @click="aumentarTexto"
-        class="bg-green-500 text-white px-3 py-2 rounded-lg shadow hover:bg-green-600"
+        class="bg-green-500 text-white px-2 sm:px-3 py-2 text-sm sm:text-base rounded-lg shadow hover:bg-green-600"
       >
         ➕
       </button>
       <button
         @click="disminuirTexto"
-        class="bg-red-500 text-white px-3 py-2 rounded-lg shadow hover:bg-red-600"
+        class="bg-red-500 text-white px-2 sm:px-3 py-2 text-sm sm:text-base rounded-lg shadow hover:bg-red-600"
       >
         ➖
       </button>
@@ -72,13 +72,13 @@
 
     <!-- 📖 Contenedor principal -->
     <div
-      class="bg-white bg-opacity-90 shadow-2xl rounded-2xl p-10 w-[95%] sm:w-[850px] text-center border border-gray-200 relative z-20 backdrop-blur-sm"
+      class="bg-white bg-opacity-90 shadow-2xl rounded-2xl p-4 sm:p-10 w-[95%] sm:w-[850px] text-center border border-gray-200 relative z-20 backdrop-blur-sm mt-16 sm:mt-0"
     >
       <!-- Título -->
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">
+      <h2 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-4">
         {{ idioma === 'es' ? '📖 Historias Interactivas' : '📖 Tukari neyutɨa' }}
       </h2>
-      <p class="text-gray-600 italic mb-8">
+      <p class="text-gray-600 italic text-sm sm:text-base mb-4 sm:mb-8">
         {{
           idioma === 'es'
             ? 'Lee, elige y descubre el final...'
@@ -90,23 +90,23 @@
       <img
         :src="historiaActual.imagen"
         alt="imagen historia"
-        class="w-56 h-56 mx-auto mb-6 object-contain rounded-xl shadow-md"
+        class="w-40 h-40 sm:w-56 sm:h-56 mx-auto mb-4 sm:mb-6 object-contain rounded-xl shadow-md"
       />
 
       <!-- Texto -->
       <div
-        class="bg-yellow-50 border border-yellow-200 rounded-xl p-6 text-left text-gray-800 text-lg leading-relaxed shadow-inner mb-6"
+        class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 sm:p-6 text-left text-gray-800 text-base sm:text-lg leading-relaxed shadow-inner mb-4 sm:mb-6"
       >
         {{ textoHistoria }}
       </div>
 
       <!-- Opciones -->
-      <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+      <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-6 sm:mb-8">
         <button
           v-for="(op, i) in opcionesActuales"
           :key="i"
           @click="elegirOpcion(op)"
-          class="bg-indigo-100 border border-indigo-300 hover:bg-green-100 text-gray-800 font-semibold rounded-xl px-6 py-3 transition-all shadow-md hover:scale-105"
+          class="bg-indigo-100 border border-indigo-300 hover:bg-green-100 text-gray-800 font-semibold text-sm sm:text-base rounded-xl px-4 sm:px-6 py-2 sm:py-3 transition-all shadow-md hover:scale-105"
         >
           {{ idioma === 'es' ? op.texto : op.textoWix }}
         </button>
@@ -125,11 +125,11 @@
 
       <!-- 🎧 Botón de voz -->
       <div class="mt-6">
-        <button
+          <button
           @click="leerTexto"
-          class="flex items-center justify-center mx-auto space-x-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-8 rounded-full shadow-md transition-transform hover:scale-105"
+          class="flex items-center justify-center mx-auto space-x-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold text-sm sm:text-base py-2 sm:py-3 px-6 sm:px-8 rounded-full shadow-md transition-transform hover:scale-105"
         >
-          <span class="material-icons text-3xl">record_voice_over</span>
+          <span class="material-icons text-2xl sm:text-3xl">record_voice_over</span>
           <span>
             {{ idioma === 'es' ? 'Escuchar narración' : 'Kiwixa tukari' }}
           </span>

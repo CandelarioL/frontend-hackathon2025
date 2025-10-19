@@ -37,26 +37,25 @@
         </div>
       </div>
 
-      <!-- 🦉 Mascota Búho educativa -->
+      <!-- 🦉 Mascota Búho educativa (responsiva) -->
       <div
-        class="absolute bottom-6 right-6 sm:bottom-10 sm:right-10 flex flex-col items-center cursor-pointer animate-flotar"
+        class="mascota-wrapper absolute bottom-4 right-4 sm:bottom-8 sm:right-8 flex flex-col items-center cursor-pointer animate-flotar"
         @click="tirarBrillitos"
+        aria-label="Mascota educativa"
       >
         <!-- 💭 Burbuja -->
-        <div
-          class="bg-white border-2 border-yellow-300 shadow-md rounded-2xl px-4 py-3 text-gray-800 text-sm font-semibold mb-3 relative text-center max-w-xs"
-        >
-          💭 {{ fraseActual }}
-          <div
-            class="absolute left-1/2 transform -translate-x-1/2 -bottom-2 w-4 h-4 bg-white border-b-2 border-r-2 border-yellow-300 rotate-45"
-          ></div>
+        <div class="relative mb-2 mascota-bubble-wrapper">
+          <div class="bubble mascota-bubble text-center">
+            💭 <strong class="break-words">{{ fraseActual }}</strong>
+          </div>
+          <div class="bubble-tail" aria-hidden="true"></div>
         </div>
 
         <!-- 🦉 Imagen del búho (centrada y animada) -->
         <img
           src="https://cdn-icons-png.flaticon.com/512/616/616408.png"
           alt="Búho sabio"
-          class="w-32 h-32 sm:w-40 sm:h-40 drop-shadow-md hover:scale-110 transition-all duration-300"
+          class="mascota-img drop-shadow-md hover:scale-105 transition-all duration-300"
         />
       </div>
     </main>
@@ -198,6 +197,60 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
   border: 1px solid #fcd34d;
   transition: all 0.3s ease;
+}
+
+/* Reglas responsivas para la mascota (JuegoLenguaje) */
+.mascota-wrapper {
+  max-width: 36vw;
+  max-height: 48vh;
+  z-index: 30;
+}
+.mascota-img {
+  width: clamp(56px, 11.5vw, 180px);
+  height: auto;
+  max-height: 40vh;
+  object-fit: contain;
+  display: block;
+}
+.mascota-bubble-wrapper {
+  max-width: calc(clamp(56px, 11.5vw, 180px) * 1.9);
+  width: max-content;
+  min-width: 110px;
+}
+.mascota-bubble {
+  padding: 0.45rem 0.65rem;
+  font-size: clamp(0.72rem, 1.2vw, 1rem);
+  max-width: 48vw;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+.bubble-tail {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  bottom: -0.35rem;
+  width: 0.9rem;
+  height: 0.9rem;
+  background: white;
+  border-bottom: 2px solid #fcd34d;
+  border-right: 2px solid #fcd34d;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+@media (max-width: 420px) {
+  .mascota-wrapper {
+    right: 0.5rem;
+    bottom: 0.6rem;
+    max-width: 46vw;
+  }
+  .mascota-bubble-wrapper {
+    min-width: 96px;
+    max-width: 70vw;
+  }
+  .mascota-bubble {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.55rem;
+  }
 }
 
 /* ✨ Aparición de tarjetas */

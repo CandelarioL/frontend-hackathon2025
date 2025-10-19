@@ -1,26 +1,26 @@
 <template>
   <div
-    class="min-h-screen bg-gradient-to-b from-sky-200 to-green-200 flex flex-col items-center justify-center relative overflow-hidden"
+    class="min-h-screen bg-gradient-to-b from-sky-200 to-green-200 flex flex-col items-center justify-center relative overflow-hidden px-2 sm:px-0"
   >
     <!-- 🟢 Panel de puntuación -->
     <div
-      class="absolute top-[140px] right-8 text-right bg-white border border-gray-300 rounded-xl px-6 py-3 shadow-lg z-20"
+      class="absolute top-[110px] right-2 sm:top-[140px] sm:right-8 text-right bg-white border border-gray-300 rounded-xl px-4 sm:px-6 py-2 sm:py-3 shadow-lg z-20 panel-responsive"
     >
       <div class="text-sm text-green-700 font-bold">Preguntas contestadas</div>
-      <div class="text-3xl font-bold">{{ contador }}</div>
+      <div class="text-2xl sm:text-3xl font-bold">{{ contador }}</div>
       <div class="text-sm text-blue-600 mt-2 font-semibold">SmartScore</div>
-      <div class="text-3xl font-bold text-orange-500">{{ puntuacion }}</div>
+      <div class="text-2xl sm:text-3xl font-bold text-orange-500">{{ puntuacion }}</div>
     </div>
 
     <!-- 🐶 Mascota -->
-    <div class="absolute bottom-4 left-6 flex flex-col items-center text-center z-10">
+    <div class="absolute bottom-2 left-2 sm:bottom-4 sm:left-6 flex flex-col items-center text-center z-10 mascota-responsive">
       <img
-        :class="['w-52 sm:w-64 drop-shadow-2xl transition-transform duration-700', saltando ? 'jump' : '']"
+        :class="['w-36 sm:w-52 md:w-64 drop-shadow-2xl transition-transform duration-700', saltando ? 'jump' : '']"
         src="https://cdn-icons-png.flaticon.com/512/616/616408.png"
         alt="Mascota motivadora"
       />
       <p
-        class="text-gray-800 text-xl font-semibold italic mt-2 bg-white bg-opacity-80 px-3 py-1 rounded-xl shadow-md max-w-xs"
+        class="text-gray-800 text-base sm:text-xl font-semibold italic mt-2 bg-white bg-opacity-80 px-2 sm:px-3 py-1 rounded-xl shadow-md max-w-xs"
       >
         {{ mensajeMascota }}
       </p>
@@ -28,7 +28,7 @@
 
     <!-- 🔹 Contenedor principal -->
     <div
-      class="bg-white shadow-2xl rounded-2xl p-10 w-[95%] sm:w-[850px] text-center border border-gray-200 relative z-20"
+      class="bg-white shadow-2xl rounded-2xl p-4 sm:p-10 w-full max-w-[98vw] sm:max-w-[850px] text-center border border-gray-200 relative z-20"
     >
       <h2 class="text-2xl font-semibold text-gray-800 mb-6">
         🧠 ¡Resuelve el problema matemático!
@@ -38,11 +38,11 @@
       <img
         :src="problemaActual.imagen"
         alt="Imagen del problema"
-        class="w-52 h-52 mx-auto mb-6 rounded-xl shadow-md object-contain bg-white p-2"
+        class="w-32 h-32 sm:w-52 sm:h-52 mx-auto mb-4 sm:mb-6 rounded-xl shadow-md object-contain bg-white p-2"
       />
 
       <!-- 🔹 Texto del problema -->
-      <p class="text-lg text-gray-700 font-medium mb-6 px-6 leading-relaxed">
+      <p class="text-base sm:text-lg text-gray-700 font-medium mb-4 sm:mb-6 px-2 sm:px-6 leading-relaxed">
         {{ problemaActual.texto }}
       </p>
 
@@ -51,13 +51,13 @@
         type="number"
         v-model="respuesta"
         placeholder="Escribe tu respuesta..."
-        class="border-2 border-gray-300 rounded-xl w-60 text-center text-3xl py-2 focus:outline-none focus:ring-4 focus:ring-green-400 mb-8"
+        class="border-2 border-gray-300 rounded-xl w-32 sm:w-60 text-center text-xl sm:text-3xl py-2 focus:outline-none focus:ring-4 focus:ring-green-400 mb-6 sm:mb-8"
       />
 
       <!-- 🔹 Botón Enviar -->
       <button
         @click="verificar"
-        class="bg-green-500 hover:bg-green-600 text-white text-lg font-semibold py-3 px-10 rounded-full shadow-md transition-transform hover:scale-105"
+        class="bg-green-500 hover:bg-green-600 text-white text-base sm:text-lg font-semibold py-2 sm:py-3 px-6 sm:px-10 rounded-full shadow-md transition-transform hover:scale-105"
       >
         Enviar
       </button>
@@ -66,7 +66,7 @@
       <transition name="fade">
         <div
           v-if="mensaje"
-          class="mt-6 text-2xl font-semibold"
+          class="mt-4 sm:mt-6 text-lg sm:text-2xl font-semibold"
           :class="esCorrecto ? 'text-green-600' : 'text-red-600'"
         >
           {{ mensaje }}
@@ -74,12 +74,12 @@
       </transition>
 
       <!-- 🔹 Botón de voz -->
-      <div class="mt-8">
+      <div class="mt-6 sm:mt-8">
         <button
           @click="leerProblema"
-          class="flex items-center justify-center mx-auto space-x-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-8 rounded-full shadow-md transition-transform hover:scale-105"
+          class="flex items-center justify-center mx-auto space-x-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 sm:py-3 px-3 sm:px-8 rounded-full shadow-md transition-transform hover:scale-105 text-xs sm:text-base"
         >
-          <span class="material-icons text-3xl">record_voice_over</span>
+          <span class="material-icons text-xl sm:text-3xl">record_voice_over</span>
           <span>Escuchar problema</span>
         </button>
       </div>
@@ -287,5 +287,25 @@ export default {
 }
 .jump {
   animation: dogJump 1.2s ease-in-out;
+}
+
+/* Responsividad extra para panel y mascota */
+.panel-responsive {
+  max-width: 90vw;
+}
+.mascota-responsive {
+  max-width: 60vw;
+}
+@media (max-width: 640px) {
+  .panel-responsive {
+    top: 60px !important;
+    right: 2vw !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.95rem !important;
+  }
+  .mascota-responsive {
+    left: 2vw !important;
+    bottom: 2vw !important;
+  }
 }
 </style>

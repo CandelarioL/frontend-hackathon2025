@@ -11,9 +11,9 @@
           @click="$router.push('/menu')"
         >
           <span class="text-3xl">🧩</span>
-          <span class="text-2xl font-bold text-green-600 tracking-tight"
-            >EduPlay</span
-          >
+          <span class="text-2xl font-bold text-green-600 tracking-tight">
+            EduPlay
+          </span>
         </div>
 
         <div class="relative hidden sm:block">
@@ -25,8 +25,9 @@
           <span
             class="absolute left-2 top-1.5 text-gray-400 text-sm material-icons"
             style="font-size: 18px"
-            >search</span
           >
+            search
+          </span>
         </div>
       </div>
 
@@ -73,13 +74,12 @@
         🎮 Misión del Conocimiento
       </button>
 
-    <button
-      @click="$router.push('/tienda')"
-      class="hover:bg-green-600 px-3 py-1.5 rounded-full transition duration-200"
-    >
-      🐾 Tienda
-    </button>
-
+      <button
+        @click="$router.push('/tienda')"
+        class="hover:bg-green-600 px-3 py-1.5 rounded-full transition duration-200"
+      >
+        🐾 Tienda
+      </button>
 
       <!-- Maestro -->
       <template v-if="rol === 'maestro'">
@@ -96,12 +96,21 @@
         >
           🏫 Mis Aulas
         </button>
+
+
+                <button
+          @click="$router.push(`/actividad/${actividad.id}`)"
+          class="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-lg transition"
+        >
+          🚀 Realizar Actividad
+        </button>
+
       </template>
 
       <!-- Alumno -->
       <template v-if="rol === 'alumno'">
         <button
-          @click="$router.push('/unirse')"
+          @click="$router.push('/mi-aula-alumno')"
           class="hover:bg-green-600 px-3 py-1.5 rounded-full transition duration-200"
         >
           🎓 Mi Aula
@@ -148,7 +157,6 @@ export default {
 </script>
 
 <style scoped>
-/* Adaptación responsive */
 @media (max-width: 640px) {
   nav {
     flex-direction: column;

@@ -27,7 +27,7 @@
             v-model="codigo"
             type="text"
             maxlength="10"
-            placeholder="Ejemplo: XGHT29"
+            placeholder="EJEMPLO: XGHT29"
             class="w-full text-center text-lg tracking-widest uppercase px-4 py-3 border-2 border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-green-400 transition"
             required
           />
@@ -49,7 +49,8 @@
             <li
               v-for="aula in aulas"
               :key="aula.id"
-              class="p-4 bg-gray-50 rounded-lg shadow-sm border border-green-100 flex justify-between items-center hover:bg-green-50 transition"
+              class="p-4 bg-gray-50 rounded-lg shadow-sm border border-green-100 hover:bg-green-50 transition cursor-pointer"
+              @click="abrirAula(aula)"
             >
               <div>
                 <p class="font-semibold text-gray-800">{{ aula.nombre }}</p>
@@ -179,6 +180,12 @@ export default {
       } finally {
         setTimeout(() => (this.mensaje = ""), 3000);
       }
+    },
+
+    // ✅ Nueva función: entrar al aula seleccionada
+    abrirAula(aula) {
+      localStorage.setItem("aulaSeleccionada", JSON.stringify(aula));
+      this.$router.push(`/mi-aula-alumno`);
     },
   },
 };

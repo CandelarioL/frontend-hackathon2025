@@ -37,28 +37,27 @@
         </div>
       </div>
 
-      <!-- 🦉 Mascota flotante -->
+      <!-- 🦉 Mascota flotante (responsiva) -->
       <div
-        class="absolute bottom-6 right-6 sm:bottom-10 sm:right-10 flex flex-col items-end animate-flotar cursor-pointer"
+        class="mascota-wrapper absolute bottom-4 right-4 sm:bottom-8 sm:right-8 flex flex-col items-end animate-flotar cursor-pointer"
         @click="tirarBrillitos"
+        aria-label="Mascota educativa"
       >
         <!-- 💭 Burbuja -->
-        <div class="relative mb-3 max-w-xs">
+        <div class="relative mb-2 mascota-bubble-wrapper">
           <div
-            class="bg-white border border-cyan-200 shadow-md rounded-3xl px-5 py-3 text-gray-700 text-sm sm:text-base leading-snug bubble relative"
+            class="bubble text-gray-700 leading-snug mascota-bubble"
           >
-            💭 <strong>{{ fraseActual }}</strong>
+            💭 <strong class="break-words">{{ fraseActual }}</strong>
           </div>
-          <div
-            class="absolute -bottom-2 right-8 w-6 h-6 bg-white rotate-45 border-b border-r border-cyan-200"
-          ></div>
+          <div class="bubble-tail" aria-hidden="true"></div>
         </div>
 
         <!-- 🦉 Imagen de la mascota -->
         <img
           src="https://cdn-icons-png.flaticon.com/512/616/616408.png"
           alt="Mascota educativa"
-          class="w-40 h-40 sm:w-48 sm:h-48 drop-shadow-xl transform hover:scale-110 transition-all duration-300"
+          class="mascota-img drop-shadow-xl transform hover:scale-105 transition-all duration-300"
         />
       </div>
     </main>
@@ -90,7 +89,7 @@ export default {
       actividades: [
         {
           id: 1,
-          titulo: "Suma Básica",
+          titulo: "Un Poco de todo",
           descripcion:
             "Practica sumas sencillas para fortalecer tus habilidades.",
           icono: "➕",
@@ -99,7 +98,7 @@ export default {
         },
         {
           id: 2,
-          titulo: "Resta Básica",
+          titulo: "Sumas y Restas",
           descripcion:
             "Aprende a restar con ejercicios divertidos y dinámicos.",
           icono: "➖",
@@ -203,5 +202,67 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
   border: 1px solid #bae6fd;
   transition: all 0.3s ease;
+}
+
+/* ----- Reglas responsivas para la mascota ----- */
+.mascota-wrapper {
+  /* permitir que la mascota no salga del viewport en pantallas pequeñas */
+  max-width: 38vw;
+  max-height: 48vh;
+  z-index: 30;
+}
+
+.mascota-img {
+  /* tamaño fluido: mínimo 56px, preferido 12vw, máximo 200px */
+  width: clamp(56px, 12vw, 200px);
+  height: auto;
+  max-height: 40vh;
+  object-fit: contain;
+  display: block;
+}
+
+.mascota-bubble-wrapper {
+  max-width: calc(clamp(56px, 12vw, 200px) * 1.8);
+  /* evitar que la burbuja exceda el ancho de la pantalla */
+  width: max-content;
+  min-width: 120px;
+}
+
+.mascota-bubble {
+  padding: 0.5rem 0.75rem;
+  font-size: clamp(0.75rem, 1.3vw, 1rem);
+  max-width: 46vw;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.bubble-tail {
+  position: absolute;
+  right: 1.7rem;
+  bottom: -0.4rem;
+  width: 0.9rem;
+  height: 0.9rem;
+  background: white;
+  transform: rotate(45deg);
+  border-bottom: 1px solid #bae6fd;
+  border-right: 1px solid #bae6fd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 420px) {
+  .mascota-wrapper {
+    right: 0.5rem;
+    bottom: 0.5rem;
+    max-width: 46vw;
+  }
+  .mascota-bubble-wrapper {
+    min-width: 100px;
+    max-width: 70vw;
+  }
+  .mascota-bubble {
+    font-size: 0.72rem;
+    padding: 0.45rem 0.6rem;
+  }
 }
 </style>

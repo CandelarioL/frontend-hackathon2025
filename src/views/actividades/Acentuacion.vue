@@ -1,6 +1,6 @@
 <template>
   <div
-    class="min-h-screen relative flex flex-col items-center justify-center overflow-hidden"
+    class="min-h-screen relative flex flex-col items-center justify-center overflow-hidden px-4 py-8 sm:px-6"
     :style="{ fontSize: fontSize + 'px' }"
   >
     <!-- 🌀 Fondo animado -->
@@ -8,12 +8,14 @@
       <div
         v-for="(letra, i) in letrasFondo"
         :key="i"
-        class="absolute text-[40px] font-bold opacity-10 text-gray-700 animate-float select-none"
+        class="absolute font-bold opacity-10 text-gray-700 animate-float select-none pointer-events-none"
         :style="{
           top: letra.top + '%',
           left: letra.left + '%',
           animationDelay: letra.delay + 's',
-          color: letra.color
+          color: letra.color,
+          fontSize: letra.size + 'px',
+          transform: `translate(-50%, -50%) rotate(${letra.rotate}deg)`
         }"
       >
         {{ letra.char }}
@@ -22,7 +24,8 @@
 
     <!-- 🟢 Panel de puntuación -->
     <div
-      class="absolute top-[140px] right-8 text-right bg-white bg-opacity-90 border border-gray-300 rounded-xl px-6 py-3 shadow-lg z-20"
+      class="hidden sm:block absolute top-4 sm:top-36 left-1/2 sm:left-auto -translate-x-1/2 sm:translate-x-0 right-4 sm:right-8 text-right bg-white bg-opacity-95 border border-gray-300 rounded-xl px-4 py-2 sm:px-6 sm:py-3 shadow-lg z-20 w-44 sm:w-auto"
+      style="backdrop-filter: blur(4px);"
     >
       <div class="text-sm text-green-700 font-bold">
         {{ idioma === 'es' ? 'Palabras acentuadas' : 'Tukari neiya' }}
@@ -33,21 +36,21 @@
     </div>
 
     <!-- 🐶 Mascota -->
-    <div class="absolute bottom-4 left-6 flex flex-col items-center text-center z-10">
+    <div class="hidden sm:flex absolute bottom-4 left-4 sm:left-6 flex-col items-center text-center z-10 max-w-[180px] sm:max-w-xs">
       <img
-        :class="['w-52 sm:w-64 drop-shadow-2xl transition-transform duration-700', saltando ? 'jump' : '']"
+        :class="['w-28 sm:w-52 drop-shadow-2xl transition-transform duration-700', saltando ? 'jump' : '']"
         src="https://cdn-icons-png.flaticon.com/512/616/616408.png"
         alt="Mascota motivadora"
       />
       <p
-        class="text-gray-800 text-xl font-semibold italic mt-2 bg-white bg-opacity-80 px-3 py-1 rounded-xl shadow-md max-w-xs"
+        class="text-gray-800 text-sm sm:text-lg font-semibold italic mt-2 bg-white bg-opacity-80 px-3 py-1 rounded-xl shadow-md break-words"
       >
         {{ mensajeMascota }}
       </p>
     </div>
 
     <!-- 🌐 Controles -->
-    <div class="absolute top-4 right-4 flex space-x-3 z-30">
+    <div class="absolute top-4 right-4 flex space-x-2 sm:space-x-3 z-30 items-center">
       <button
         @click="cambiarIdioma"
         class="bg-indigo-600 text-white px-3 py-2 rounded-lg shadow hover:bg-indigo-700"
@@ -56,13 +59,13 @@
       </button>
       <button
         @click="aumentarTexto"
-        class="bg-green-500 text-white px-3 py-2 rounded-lg shadow hover:bg-green-600"
+        class="bg-green-500 text-white px-2 py-1 sm:px-3 sm:py-2 rounded-lg shadow hover:bg-green-600"
       >
         ➕
       </button>
       <button
         @click="disminuirTexto"
-        class="bg-red-500 text-white px-3 py-2 rounded-lg shadow hover:bg-red-600"
+        class="bg-red-500 text-white px-2 py-1 sm:px-3 sm:py-2 rounded-lg shadow hover:bg-red-600"
       >
         ➖
       </button>
@@ -70,7 +73,8 @@
 
     <!-- 🔹 Contenedor principal -->
     <div
-      class="bg-white bg-opacity-90 shadow-2xl rounded-2xl p-10 w-[95%] sm:w-[850px] text-center border border-gray-200 relative z-20 backdrop-blur-sm"
+      class="bg-white bg-opacity-95 shadow-2xl rounded-2xl p-6 sm:p-10 w-full max-w-[900px] text-center border border-gray-200 relative z-20 backdrop-blur-sm"
+      style="min-width:260px;"
     >
       <h2 class="text-2xl font-semibold text-gray-800 mb-8">
         💫 {{ idioma === 'es' ? '¡Acentúa Correctamente!' : 'Tei tukari tewi!' }}
@@ -155,19 +159,38 @@ export default {
       saltando: false,
     };
   },
-  mounted() {
-    this.nuevaPalabra();
-    this.generarLetrasFondo();
-  },
+    mounted() {
+      this.nuevaPalabra();
+      this.generarLetrasFondo();
+      window.addEventListener('resize', this._handleResize);
+    },
+    beforeUnmount() {
+      window.removeEventListener('resize', this._handleResize);
+    },
   methods: {
+    _handleResize() {
+      clearTimeout(this._resizeTimeout);
+      this._resizeTimeout = setTimeout(() => this.generarLetrasFondo(), 150);
+    },
     generarLetrasFondo() {
+      this.letrasFondo = [];
       const letras = "ÁÉÍÓÚAEIOUÑ";
-      for (let i = 0; i < 20; i++) {
+      const width = window.innerWidth || 1024;
+      let count = 18;
+      if (width < 480) count = 6;
+      else if (width < 768) count = 10;
+      else if (width < 1024) count = 14;
+      for (let i = 0; i < count; i++) {
+        const randChar = letras.charAt(Math.floor(Math.random() * letras.length));
+        const sizeBase = width < 480 ? 18 : width < 768 ? 26 : 34;
+        const size = Math.round(sizeBase + Math.random() * 16);
         this.letrasFondo.push({
-          char: letras.charAt(Math.floor(Math.random() * letras.length)),
+          char: randChar,
           top: Math.random() * 100,
           left: Math.random() * 100,
           delay: Math.random() * 5,
+          rotate: (Math.random() - 0.5) * 40,
+          size,
           color: ["#9333EA", "#1E40AF", "#047857", "#E11D48"][Math.floor(Math.random() * 4)],
         });
       }
@@ -220,7 +243,7 @@ export default {
       speech.lang = "es-ES";
       speech.rate = 0.9;
       speech.pitch = 1.1;
-      speech.volume = 1.4;
+      speech.volume = Math.min(1.0, 1.0);
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(speech);
     },

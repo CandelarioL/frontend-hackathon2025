@@ -1,46 +1,130 @@
 <template>
   <div>
-    <header class="flex flex-col sm:flex-row items-center justify-between bg-white px-6 py-4 shadow-md border-b border-gray-200">
-      <div class="flex items-center space-x-4">
-        <div class="flex items-center space-x-2 cursor-pointer" @click="$router.push('/menu')">
-          <span class="text-3xl">🧩</span>
-          <span class="text-2xl font-bold text-green-600 tracking-tight">EduPlay</span>
-        </div>
-
-        <div class="relative hidden sm:block">
-          <input
-            type="text"
-            placeholder="Buscar temas o competencias..."
-            class="border border-gray-300 rounded-full px-4 py-1.5 text-sm w-64 pl-8 focus:outline-none focus:ring-2 focus:ring-green-400"
-          />
-          <span class="absolute left-2 top-1.5 text-gray-400 text-sm material-icons" style="font-size: 18px">search</span>
-        </div>
+    <!-- 🧭 ENCABEZADO FIJO SIEMPRE -->
+    <header
+      class="fixed top-0 left-0 w-full flex items-center justify-between bg-white/95 backdrop-blur-md px-6 py-4 shadow-md border-b border-gray-200 z-50 transition-all duration-300"
+    >
+      <!-- Logo -->
+      <div
+        class="flex items-center space-x-2 cursor-pointer select-none"
+        @click="$router.push('/menu')"
+      >
+        <span class="text-3xl">🎓</span>
+        <span class="text-2xl font-bold text-green-600 tracking-tight"
+          >DynamicsClass</span
+        >
       </div>
 
+      <!-- Botón hamburguesa (solo móviles) -->
+      <button
+        @click="menuAbierto = !menuAbierto"
+        class="sm:hidden text-3xl text-green-600 focus:outline-none"
+      >
+        <span v-if="!menuAbierto">☰</span>
+        <span v-else>✖</span>
+      </button>
+
+      <!-- Cerrar sesión (solo escritorio) -->
       <button
         @click="cerrarSesion"
-        class="mt-3 sm:mt-0 bg-green-600 text-white px-5 py-2 rounded-full font-semibold shadow hover:bg-green-700 hover:shadow-lg transition duration-200"
+        class="hidden sm:block bg-green-600 text-white px-5 py-2 rounded-full font-semibold shadow hover:bg-green-700 hover:shadow-lg transition duration-200"
       >
-        🚪 Cerrar sesión
+        🚪 Salir
       </button>
     </header>
 
-    <nav class="bg-green-500 text-white flex flex-wrap justify-center gap-6 py-3 text-lg font-semibold shadow-lg">
-      <button @click="$router.push('/perfil')" class="hover:bg-green-600 px-3 py-1.5 rounded-full transition duration-200">👤 Perfil</button>
-      <button @click="$router.push('/matematicas')" class="hover:bg-green-600 px-3 py-1.5 rounded-full transition duration-200">🧮 Matemáticas</button>
-      <button @click="$router.push('/juego-lenguaje')" class="hover:bg-green-600 px-3 py-1.5 rounded-full transition duration-200">✍️ Lenguaje</button>
-      <button @click="$router.push('/aventura/personaje')" class="bg-yellow-400 text-gray-900 hover:bg-yellow-500 px-4 py-1.5 rounded-full font-semibold shadow transition duration-200">🎮 Misión del Conocimiento</button>
-      <button @click="$router.push('/tienda')" class="hover:bg-green-600 px-3 py-1.5 rounded-full transition duration-200">🐾 Tienda</button>
+    <!-- 📚 MENÚ PRINCIPAL (fijo debajo del header) -->
+    <nav
+      :class="[
+        'fixed left-0 w-full text-white font-semibold shadow-lg bg-green-500 transition-all duration-300 z-40',
+        menuAbierto
+          ? 'top-[72px] max-h-screen opacity-100'
+          : 'top-[72px] max-h-0 opacity-0 sm:opacity-100 sm:max-h-none',
+      ]"
+      class="overflow-hidden sm:overflow-visible sm:flex sm:justify-center sm:gap-6 sm:py-3 text-lg"
+    >
+      <div
+        class="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 sm:gap-6 p-4 sm:p-0"
+      >
+        <!-- 🏠 Inicio -->
+        <button
+          @click="$router.push('/menu')"
+          class="hover:bg-green-600 px-3 py-1.5 rounded-full flex items-center gap-2 transition duration-200"
+        >
+          🏠 <span>Inicio</span>
+        </button>
 
-      <template v-if="rol === 'maestro'">
-        <button @click="$router.push('/crear-aula')" class="hover:bg-green-600 px-3 py-1.5 rounded-full transition duration-200">🏗️ Crear Aula</button>
-        <button @click="$router.push('/aulas')" class="hover:bg-green-600 px-3 py-1.5 rounded-full transition duration-200">🏫 Mis Aulas</button>
-      </template>
+        <button
+          @click="$router.push('/perfil')"
+          class="hover:bg-green-600 px-3 py-1.5 rounded-full flex items-center gap-2 transition duration-200"
+        >
+          👩‍🏫 <span>Perfil</span>
+        </button>
 
-      <template v-if="rol === 'alumno'">
-        <button @click="$router.push('/unirse')" class="hover:bg-green-600 px-3 py-1.5 rounded-full transition duration-200">🎓 Mi Aula</button>
-      </template>
+        <button
+          @click="$router.push('/matematicas')"
+          class="hover:bg-green-600 px-3 py-1.5 rounded-full flex items-center gap-2 transition duration-200"
+        >
+          🔢 <span>Matemáticas</span>
+        </button>
+
+        <button
+          @click="$router.push('/juego-lenguaje')"
+          class="hover:bg-green-600 px-3 py-1.5 rounded-full flex items-center gap-2 transition duration-200"
+        >
+          ✏️ <span>Lenguaje</span>
+        </button>
+
+        <button
+          @click="$router.push('/aventura/personaje')"
+          class="bg-yellow-300 text-gray-900 hover:bg-yellow-400 px-4 py-1.5 rounded-full font-semibold shadow flex items-center gap-2 transition duration-200"
+        >
+          🧭 <span>Misión del Conocimiento</span>
+        </button>
+
+        <button
+          @click="$router.push('/tienda')"
+          class="hover:bg-green-600 px-3 py-1.5 rounded-full flex items-center gap-2 transition duration-200"
+        >
+          🛍️ <span>Tienda</span>
+        </button>
+
+        <template v-if="rol === 'maestro'">
+          <button
+            @click="$router.push('/crear-aula')"
+            class="hover:bg-green-600 px-3 py-1.5 rounded-full flex items-center gap-2 transition duration-200"
+          >
+            🏗️ <span>Crear Aula</span>
+          </button>
+          <button
+            @click="$router.push('/aulas')"
+            class="hover:bg-green-600 px-3 py-1.5 rounded-full flex items-center gap-2 transition duration-200"
+          >
+            🏫 <span>Mis Aulas</span>
+          </button>
+        </template>
+
+        <template v-if="rol === 'alumno'">
+          <button
+            @click="$router.push('/unirse')"
+            class="hover:bg-green-600 px-3 py-1.5 rounded-full flex items-center gap-2 transition duration-200"
+          >
+            🎒 <span>Mi Aula</span>
+          </button>
+        </template>
+
+        <!-- Cerrar sesión (solo móvil) -->
+        <button
+          @click="cerrarSesion"
+          class="sm:hidden bg-green-700 text-white px-4 py-2 rounded-full font-semibold shadow hover:bg-green-800 transition duration-200 mt-2 flex items-center gap-2"
+        >
+          🚪 <span>Salir</span>
+        </button>
+      </div>
     </nav>
+
+    <!-- 🧩 Espaciador para que el contenido no quede tapado -->
+    <div class="pt-[125px]"></div>
   </div>
 </template>
 
@@ -50,6 +134,7 @@ export default {
   data() {
     return {
       rol: "",
+      menuAbierto: false,
     };
   },
   mounted() {
@@ -63,7 +148,7 @@ export default {
           const payload = JSON.parse(atob(token.split(".")[1]));
           this.rol = payload.rol || "";
         } catch (e) {
-          console.error("Error al decodificar token en NavBarGlobal:", e);
+          console.error("Error al decodificar token:", e);
         }
       }
     }
@@ -79,10 +164,10 @@ export default {
 </script>
 
 <style scoped>
-@media (max-width: 640px) {
-  nav {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
+nav {
+  transition: all 0.4s ease;
+}
+header {
+  background-color: rgba(255, 255, 255, 0.95);
 }
 </style>
