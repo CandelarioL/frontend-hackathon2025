@@ -41,7 +41,7 @@ ocup aqui hacer una sepacion en blanco, para que tpdp lo demas de abajo baje mas
       >
         <!-- 📘 Lenguaje -->
         <router-link
-          to="/lenguaje"
+          to="/juego-lenguaje"
           class="bg-white p-6 rounded-2xl shadow-md border border-emerald-100 flex flex-col items-center justify-center hover:scale-105 transition"
         >
           <div class="text-4xl">📘</div>
