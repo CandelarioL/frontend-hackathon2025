@@ -62,7 +62,7 @@
 
     <!-- 🔹 Pie de página -->
     <footer class="text-center py-4 text-sm text-gray-500">
-      © 2025 EduPlay — Lenguaje Interactivo con el Búho 🦉
+      © 2025 DynamicsClass — Lenguaje Interactivo con el Búho 🦉
     </footer>
   </div>
 </template>

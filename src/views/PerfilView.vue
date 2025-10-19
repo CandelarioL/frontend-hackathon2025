@@ -66,7 +66,7 @@
 
     <!-- 🔹 Pie -->
     <footer class="text-center py-4 text-sm text-gray-500">
-      © 2025 EduPlay — Aprende a tu ritmo 💚
+      © 2025 DynamicsClass — Aprende a tu ritmo 💚
     </footer>
   </div>
 </template>

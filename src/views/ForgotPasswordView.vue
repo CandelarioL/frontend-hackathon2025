@@ -61,7 +61,7 @@
 
     <!-- 🌿 Footer -->
     <div class="absolute bottom-4 text-green-600 text-sm">
-      © 2025 EduPlay — Recupera tu acceso y sigue aprendiendo 💚
+      © 2025 DynamicsClass — Recupera tu acceso y sigue aprendiendo 💚
     </div>
   </div>
 </template>

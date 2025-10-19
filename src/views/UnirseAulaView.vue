@@ -102,7 +102,7 @@
 
     <!-- 🔹 Pie -->
     <footer class="text-center py-5 text-sm text-gray-500">
-      © 2025 EduPlay — Aprende, comparte y crece 💚
+      © 2025 DynamicsClass — Aprende, comparte y crece 💚
     </footer>
   </div>
 </template>

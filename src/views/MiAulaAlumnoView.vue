@@ -86,7 +86,7 @@
     </main>
 
     <footer class="text-center py-5 text-sm text-gray-500">
-      © 2025 EduPlay — Aprender también es un juego 💚
+      © 2025 DynamicsClass — Aprender también es un juego 💚
     </footer>
   </div>
 </template>

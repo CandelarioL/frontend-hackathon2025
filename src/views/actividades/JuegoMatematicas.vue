@@ -64,7 +64,7 @@
 
     <!-- 🔹 Pie -->
     <footer class="text-center py-4 text-sm text-gray-500">
-      © 2025 Aprendizaje Interactivo — Inspirado en IXL
+      © 2025 DynamicsClass — Inspirado en IXL
     </footer>
   </div>
 </template>

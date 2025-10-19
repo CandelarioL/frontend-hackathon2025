@@ -200,7 +200,7 @@
     </main>
 
     <footer class="text-center py-5 text-sm text-gray-500">
-      © 2025 EduPlay — Enseñar también es inspirar 💚
+      © 2025 DynamicsClass — Enseñar también es inspirar 💚
     </footer>
   </div>
 </template>
